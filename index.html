@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="skyscrapers">
+<head>
+    <meta charset="utf-8">
+    <title>Masonry</title>
+    <meta name="viewport" content="width=device-width"><meta name="fragment" content="!" />
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body ng-controller="ImagesGrid">
+    <div class="loader" ng-show="loading"></div>
+    <div class="grid-container"
+         skyscraper
+         scroll-loader
+         scroll-loader-callback="loadMore(10)"
+         scroll-loader-offset="300">
+        <div skyscraper-sizer class="grid-sizer"></div>
+        <div class="grid-item" skyscraper-item ng-repeat="image in images track by $index">
+            <img ng-src="{{image.url}}">
+        </div>
+    </div>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="http://imagesloaded.desandro.com/imagesloaded.pkgd.min.js"></script>
+    <script src="module.js"></script>
+    <script src="services/SkyscrapersUtils.service.js"></script>
+    <script src="directives/skyscraperItem.directive.js"></script>
+    <script src="directives/skyscraperSizer.directive.js"></script>
+    <script src="directives/skyscraper.directive.js"></script>
+    <script src="controllers/SkyscraperContainer.controller.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
