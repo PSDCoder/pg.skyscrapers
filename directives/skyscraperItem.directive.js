@@ -13,11 +13,21 @@
             replace: true,
             require: '^skyscraper',
             link: function ($scope, $element, $attrs, skyscraperController) {
+                var savedIndex = $scope.$index;
+
+                console.log($scope.$index + ' - ' + $scope.$id);
+                
                 $timeout(function () {
                     skyscraperController.addItem($element);
                 });
+
                 $scope.$on('$destroy', function () {
-                    skyscraperController.removeItem($element);
+                    console.log('$scope', $scope);
+                    console.log('savedIndex', savedIndex);
+                    console.log('$scope.$index', $scope.$index);
+                    $timeout(function () {
+                        skyscraperController.removeItem($element);
+                    });
                 });
             }
         };

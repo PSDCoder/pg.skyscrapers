@@ -8,14 +8,20 @@
 </head>
 <body ng-controller="ImagesGrid">
     <div class="loader" ng-show="loading"></div>
+    <div class="buttons">
+        <button class="button" ng-click="remove()">Remove random</button>
+        <button class="button" ng-click="toggleLoading()">Toggle loading</button>
+        <p>Loading can: {{!loading}}</p>
+    </div>
     <div class="grid-container"
          skyscraper
          scroll-loader
          scroll-loader-callback="loadMore(10)"
          scroll-loader-offset="300">
         <div skyscraper-sizer class="grid-sizer"></div>
-        <div class="grid-item" skyscraper-item ng-repeat="image in images track by $index">
+        <div class="grid-item" skyscraper-item ng-repeat="image in images track by $index" ng-click="remove($index, $id)">
             <img ng-src="{{image.url}}">
+            <div>{{$index}}</div>
         </div>
     </div>
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>

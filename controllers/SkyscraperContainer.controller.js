@@ -56,17 +56,12 @@
                 self._checkQueue();
             });
         };
-
+        
         this.removeItem = function ($item) {
-            gridItems.splice(gridItems.indexOf($item), 1);
-        };
+            var itemIndex = gridItems.indexOf($item);
 
-        this._calculateAllItemsPositions = function () {
-            angular.forEach(gridItems, function ($item) {
-                self._calculateItemPosition($item);
-            });
-
-            this._calculateContainerHeight(true);
+            gridItems.splice(itemIndex, 1);
+            this._calculateAllItemsPositions(itemIndex - 1);
         };
 
         this._resetColumnsObject = function () {
@@ -79,7 +74,6 @@
         };
 
         this._calculateColumnsCount = function (oneColumnWidth) {
-            //fix browsers rounding
             //fix browsers rounding
             var n = Math.floor(containerWidth / oneColumnWidth);
             var n1 = Math.floor(containerWidth / (oneColumnWidth - 1));
@@ -102,9 +96,42 @@
                 })
                 .addClass(visibleClass);
 
+            $item.columnIndex = minIndex;
             columns[minIndex] += $item.outerHeight();
 
             this._calculateContainerHeight();
+        };
+
+        this._calculateAllItemsPositions = function (prevElementIndex) {
+            var i = 0;
+            var length = gridItems.length;
+            var columnIndex = prevElementIndex;
+            var columnsHeight = {};
+
+            if (prevElementIndex && prevElementIndex > columnsCount) {
+                while (prevElementIndex > 0 && Object.keys(columnsHeight).length !== columnsCount) {
+                    i = prevElementIndex;
+
+                    if (!columnsHeight[gridItems[prevElementIndex].columnIndex]) {
+                        columnsHeight[gridItems[prevElementIndex].columnIndex] =
+                            parseInt(gridItems[prevElementIndex].css('top'), 10);
+                    }
+
+                    prevElementIndex--;
+                }
+
+                for (columnIndex in columnsHeight) {
+                    if (columnsHeight.hasOwnProperty(columnIndex)) {
+                        columns[columnIndex] = columnsHeight[columnIndex];
+                    }
+                }
+            }
+
+            for (;i < length; i++) {
+                self._calculateItemPosition(gridItems[i]);
+            }
+
+            this._calculateContainerHeight(true);
         };
 
         this._calculateContainerHeight = function(force) {

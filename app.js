@@ -28,11 +28,25 @@ angular
                 });
                 $timeout(function () {
                     $scope.loading = false;
-                }, 1000);
+                }, 1500);
             });
         };
 
         $scope.loadMore(20);
+
+        $scope.remove = function (index, id) {
+            if (index) {
+                console.log('remove by click: ', index, id);
+            }
+            
+            var removeIndex = index || Math.floor(Math.random() * $scope.images.length);
+            
+            $scope.images.splice(removeIndex, 1);
+        };
+
+        $scope.toggleLoading = function () {
+            $scope.loading = !$scope.loading;
+        };
     })
     .directive('scrollLoader', ['SkyscrapersUtils', function (SkyscrapersUtils) {
         return {
