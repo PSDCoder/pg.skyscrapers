@@ -5,14 +5,17 @@
         .module('pg.skyscrapers')
         .directive('skyscraperItem', skyscraperItemDirective);
 
-    function skyscraperItemDirective() {
+    skyscraperItemDirective.$inject = ['$timeout'];
+    
+    function skyscraperItemDirective($timeout) {
         return {
             restrict: 'EA',
             replace: true,
             require: '^skyscraper',
             link: function ($scope, $element, $attrs, skyscraperController) {
-                skyscraperController.addItem($element);
-
+                $timeout(function () {
+                    skyscraperController.addItem($element);
+                });
                 $scope.$on('$destroy', function () {
                     skyscraperController.removeItem($element);
                 });
