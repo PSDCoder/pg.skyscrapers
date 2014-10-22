@@ -80,18 +80,11 @@
 
         this._calculateColumnsCount = function (oneColumnWidth) {
             //fix browsers rounding
-            if (containerWidth % 2 !== 0 && oneColumnWidth % 2 === 0) {
-                columnWidth = oneColumnWidth - 1;
-            } else if (containerWidth % 2 !== 0) {
-                var n = Math.floor(containerWidth / oneColumnWidth);
-                var n1 = Math.floor(containerWidth / (oneColumnWidth - 1));
+            //fix browsers rounding
+            var n = Math.floor(containerWidth / oneColumnWidth);
+            var n1 = Math.floor(containerWidth / (oneColumnWidth - 1));
 
-                if (n1 > n) {
-                    columnWidth = oneColumnWidth - 1;
-                }
-            } else {
-                columnWidth = oneColumnWidth;
-            }
+            columnWidth = n1 > n ? oneColumnWidth - 1 : oneColumnWidth;
             
             columnsCount = Math.floor(containerWidth / columnWidth);
 
