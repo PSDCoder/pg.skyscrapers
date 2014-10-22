@@ -1,5 +1,5 @@
 angular
-    .module('skyscrapers', ['pg-skyscrapers'])
+    .module('skyscrapers', ['pg.skyscrapers'])
     .service('ImagesLoader', function () {
         this.getImages = function (num) {
             var images = [];

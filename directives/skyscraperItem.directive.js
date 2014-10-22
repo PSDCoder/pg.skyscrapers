@@ -6,7 +6,7 @@
         .directive('skyscraperItem', skyscraperItemDirective);
 
     skyscraperItemDirective.$inject = ['$timeout'];
-    
+
     function skyscraperItemDirective($timeout) {
         return {
             restrict: 'EA',
